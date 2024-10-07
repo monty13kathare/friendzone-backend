@@ -11,14 +11,16 @@ if (process.env.NODE_ENV !== "production") {
 // CORS options to allow requests from the frontend (http://localhost:3000)
 const corsOptions = {
   origin: 'http://localhost:3000',  // Replace with your frontend URL
-  credentials: true,  // Allow cookies to be sent across different origins
+  credentials: true,  // Allow cookies to be sent
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",  // Allowed methods
+  allowedHeaders: "Content-Type,Authorization",  // Allowed headers
   optionsSuccessStatus: 200  // For legacy browser support
 };
 
-// Use the CORS middleware with the specified options
+// Apply CORS middleware to handle cross-origin requests
 app.use(cors(corsOptions));
 
-// Handle preflight (OPTIONS) requests for all routes
+// Preflight requests handling
 app.options('*', cors(corsOptions));
 
 // Middleware to parse JSON, URL-encoded data, and cookies
