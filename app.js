@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const corsOptions = {
-  origin:"http://localhost:3000",
+  origin:["http://localhost:3000", "https://friend-zone-eahnr3bl9-arvind-kathares-projects.vercel.app"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
