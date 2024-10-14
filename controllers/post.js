@@ -186,8 +186,14 @@ exports.updateCaption = async (req, res) => {
       });
     }
 
-    post.caption = req.body.caption;
+    // post.caption = req.body.caption;
+    // Update caption, location, and tags if they are provided in the request body
+    if (req.body.caption) post.caption = req.body.caption;
+    if (req.body.location) post.location = req.body.location;
+    if (req.body.tags) post.tags = req.body.tags;
+
     await post.save();
+    
     res.status(200).json({
       success: true,
       message: "Post updated",

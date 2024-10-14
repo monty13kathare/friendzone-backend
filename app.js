@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const corsOptions = {
-  origin:["http://localhost:3000", "https://friend-zone-7djmacb72-arvind-kathares-projects.vercel.app", "https://neon-lily-d1e91a.netlify.app"],
+  origin:["http://localhost:3000", "https://friend-zone-7djmacb72-arvind-kathares-projects.vercel.app", "https://unique-fenglisu-edc3c2.netlify.app"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
