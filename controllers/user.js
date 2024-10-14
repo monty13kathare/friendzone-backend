@@ -73,12 +73,12 @@ exports.login = async (req, res) => {
 
     const token = await user.generateToken();
 
-    const options = {
-      expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-      httpOnly: true,
-    };
+    // const options = {
+    //   expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+    //   httpOnly: true,
+    // };
 
-    res.status(200).cookie("token", token, options).json({
+    res.status(200).json({
       success: true,
       user,
       token,
@@ -364,21 +364,31 @@ exports.getUserProfile = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({
-      name: { $regex: req.query.name, $options: "i" },
-    });
+    // Check if the 'name' query exists, otherwise return all users
+    const query = req.query.name ? { 
+      name: { $regex: req.query.name, $options: "i" } 
+    } : {};
 
-    res.status(200).json({
-      success: true,
+    const users = await User.find(query);
+
+    if (!users.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found matching the query.",
+      });
+    }
+
+    res.status(200).json({      success: true,
       users,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error.message || "Internal server error",
     });
   }
 };
+
 
 exports.forgotPassword = async (req, res) => {
   try {

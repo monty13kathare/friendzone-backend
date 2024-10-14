@@ -146,7 +146,6 @@ exports.getAllPosts = async (req, res) => {
   try {
     // Find the current user
     const user = await User.findById(req.user._id);
-
     // Fetch posts where the owner is either the current user or one of the users they are following
     const posts = await Post.find({
       owner: {
