@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const corsOptions = {
-  origin:["http://localhost:3000"],
+  origin:["http://localhost:3000", "https://friendzone-backend-2.onrender.com"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
