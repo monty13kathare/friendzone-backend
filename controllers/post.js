@@ -142,16 +142,50 @@ exports.getPostOfFollowing = async (req, res) => {
   }
 };
 
+// exports.getAllPosts = async (req, res) => {
+//   try {
+//     // Find the current user
+//     const user = await User.findById(req.user._id);
+//     // Fetch posts where the owner is either the current user or one of the users they are following
+//     const posts = await Post.find({
+//       owner: {
+//         $in: [...user.following, req.user._id],  // Include both the followed users and the current user
+//       },
+//     }).populate("owner likes comments.user");
+
+//     // Respond with the posts
+//     res.status(200).json({
+//       success: true,
+//       posts: posts.reverse(),  // Optional: Reverse the posts to show the latest first
+//     });
+//   } catch (error) {
+//     // Handle errors
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
+
 exports.getAllPosts = async (req, res) => {
   try {
     // Find the current user
     const user = await User.findById(req.user._id);
-    // Fetch posts where the owner is either the current user or one of the users they are following
-    const posts = await Post.find({
-      owner: {
-        $in: [...user.following, req.user._id],  // Include both the followed users and the current user
-      },
-    }).populate("owner likes comments.user");
+
+    let posts;
+    
+    // If the user is not following anyone, fetch all posts
+    if (user.following.length === 0) {
+      posts = await Post.find().populate("owner likes comments.user");
+    } else {
+      // Fetch posts where the owner is either the current user or one of the users they are following
+      posts = await Post.find({
+        owner: {
+          $in: [...user.following, req.user._id],  // Include both the followed users and the current user
+        },
+      }).populate("owner likes comments.user");
+    }
 
     // Respond with the posts
     res.status(200).json({
