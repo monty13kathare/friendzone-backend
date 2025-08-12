@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -9,19 +9,22 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const corsOptions = {
-  origin:["http://localhost:3000", "https://friend-zone-iota.vercel.app", "https://unique-fenglisu-edc3c2.netlify.app"],
+  origin: [
+    "http://localhost:3000",
+    "https://friend-zone-iota.vercel.app",
+    "https://unique-fenglisu-edc3c2.netlify.app",
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
   credentials: true,
 };
 
-
 // Apply CORS middleware to handle cross-origin requests
 app.use(cors(corsOptions));
 
 // Preflight requests handling
-app.options('*', cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // Middleware to parse JSON, URL-encoded data, and cookies
 app.use(express.json({ limit: "200mb" }));
